@@ -1,7 +1,16 @@
 
 ## Base programs I want in a new R install
-## last updated: 14/12/2018
+## last updated: 07/02/2020s
 ## Alex Bhattacharya
+
+## project managemnet
+proj <- c("renv", "pacman", # project version management
+          "tidylog", # result changes
+          "tictoc", # timekeeping on code
+          "reticulate" # run python in R 
+          )
+
+install.packages(proj)
 
 ## data management
 datamgmt <- c("tidyverse",
@@ -10,7 +19,8 @@ datamgmt <- c("tidyverse",
               "nanier", # for changing any and all values to NA (tidyverse+)
               "lubridate", # date functions (tidyverse+)
               "skimr", # data browsing, use!
-              "visdat" # data exploration
+              "visdat", # data exploration
+              "sqldf" # allows reading of CSV line by line with SQL queries to filter
               )
 install.packages(datamgmt)
 
@@ -19,6 +29,19 @@ exp <- c("arsenal", # powerful table 1 creator
          "tableone" # less flexible but easy to use
          ) 
 install.packages(exp)
+
+## multicore processing
+multi <- c("foreach", # parallel loops
+           "h20", # connects to H20 ML engine
+           "future", # evaluations in parallel
+           "sparklyr", # Apache Spark interface
+           "RHIPE","RHadoop", # Hadoop interface
+           "ff","bigmemory", # use disk instead of ram
+           "rslurm","flowr" # HPC scheduling
+           )
+install.packages(multi)
+
+devtools::install_github("tidyverse/multidplyr") # multi-core processing for dplyr
 
 ## epi/stats packages
 epi <- c("epitools", # basic epi functions
@@ -44,10 +67,9 @@ epi <- c("epitools", # basic epi functions
 install.packages(epi)
 
 ## input of data
-inputs <- c("openxlsx", # read and write XLSX
-            "readxl", # similar to open
-            "haven", # read other data types including STATA files
-            "RODBC" # allows you to ODBC into databases
+inputs <- c("openxlsx","readxl", # read and write XLSX
+            "haven","foriegn", # read other data types including STATA files
+            "odbc" # allows you to ODBC into databases, faster than RODBC
             )
 install.packages(inputs)
 
@@ -88,6 +110,8 @@ install.packages("tictoc") ## code runtime testing
 install.packages("devtools")
 
 httr::set_config(httr::config(ssl_verifypeer=0L))
+
+devtools::install_git('https://gitlab.phe.gov.uk/packages/DataLakeR') ## denominator data from PHE DataLake
 
 devtools::install_github("DanielGardiner/EpiFunc", force=T) ## agesex and epicurves
 devtools::install_git('https://gitlab.phe.gov.uk/ERD/GIS/rgisws.git', build_vignettes=TRUE) ## arc gis functionality
