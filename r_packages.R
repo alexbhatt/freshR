@@ -1,5 +1,5 @@
 ## Base programs I want in a new R install
-## last updated: 07/02/2020
+## last updated: 10/02/2020
 ## Alex Bhattacharya
 
 ## project managemnet
@@ -8,12 +8,11 @@ proj <- c('renv', 'pacman', # project version management
           'tictoc', # timekeeping on code
           'reticulate' # run python in R 
 )
-
 install.packages(proj)
 
 ## data management
-datamgmt <- c('tidyverse',
-              'data.table',
+datamgmt <- c('tidyverse', # package of common tools using the same syntax format
+              'data.table', # alternative to tidyverse
               'janitor', # simple data cleaning (names, empty rows/cols; tidyverse+)
               'nanier', # for changing any and all values to NA (tidyverse+)
               'lubridate', # date functions (tidyverse+)
@@ -22,25 +21,6 @@ datamgmt <- c('tidyverse',
               'sqldf' # allows reading of CSV line by line with SQL queries to filter
 )
 install.packages(datamgmt)
-
-## data exploration/summary
-exp <- c('arsenal', # powerful table 1 creator
-         'tableone' # less flexible but easy to use
-) 
-install.packages(exp)
-
-## multicore processing
-multi <- c('foreach', # parallel loops
-           'h20', # connects to H20 ML engine
-           'future', # evaluations in parallel
-           'sparklyr', # Apache Spark interface
-           'RHIPE','RHadoop', # Hadoop interface
-           'ff','bigmemory', # use disk instead of ram
-           'rslurm','flowr' # HPC scheduling
-)
-install.packages(multi)
-
-devtools::install_github('tidyverse/multidplyr') # multi-core processing for dplyr
 
 ## epi/stats packages
 epi <- c('epitools', # basic epi functions
@@ -65,7 +45,7 @@ epi <- c('epitools', # basic epi functions
 )
 install.packages(epi)
 
-## input of data
+## input/output of data
 inputs <- c('openxlsx','readxl', # read and write XLSX
             'haven','foriegn', # read other data types including STATA files
             'odbc' # allows you to ODBC into databases, faster than RODBC
@@ -90,6 +70,25 @@ maps <- c('ggmap', # ggplot mapping
 )
 install.packages(maps)
 
+## publication table 1 summaries
+exp <- c('arsenal', # powerful table 1 creator
+         'tableone' # less flexible but easy to use
+) 
+install.packages(exp)
+
+## multicore processing
+multi <- c('foreach', # parallel loops
+           'h20', # connects to H20 ML engine
+           'future', # evaluations in parallel
+           'sparklyr', # Apache Spark interface
+           'RHIPE','RHadoop', # Hadoop interface
+           'disk.frame','ff','bigmemory', # use disk instead of ram
+           'rslurm','flowr' # HPC scheduling
+)
+install.packages(multi)
+
+devtools::install_github('tidyverse/multidplyr') # multi-core processing for dplyr
+
 ## markdown extras
 mrkdwn <- c('htmlwidgets', # plugins
             'kntir', # markdown essential
@@ -104,25 +103,26 @@ mrkdwn <- c('htmlwidgets', # plugins
 install.packages(mrkdwn)
 
 ## github installs, gitlab ones require network connections
+httr::set_config(httr::config(ssl_verifypeer=0L))
 install.packages('devtools')
 
-httr::set_config(httr::config(ssl_verifypeer=0L))
-
-## PHE internal GitLab
+## PHE GitLab ####
 phe <- c('https://gitlab.phe.gov.uk/packages/DataLakeR',## denominator data from PHE DataLake
          'https://gitlab.phe.gov.uk/ERD/GIS/rgisws.git', ## arc gis functionality
          'https://gitlab.phe.gov.uk/packages/phecharts' ## PHE branding
 )
-
 devtools::install_git(phe) 
 
-## GitHub
-
+## GitHub ####
 github <- c('DanielGardiner/EpiFunc', ## agesex and epicurves
             'PublicHealthEngland/odsR', ## ODS denonimators
             'ukgovdatascience/govstyle', ## GOV UK branding
             'hrbrmstr/hrbrthemes', ## nice ggplot themes for graphs
             'hrbrmstr/nominatim'  ## for working with openstreet map geocoding
             )
-
 devtools::install_github(github)
+
+## Other tools ####
+# https://geoportal.statistics.gov.uk/ ## The ONS postcode lookup tables can be found here
+
+
