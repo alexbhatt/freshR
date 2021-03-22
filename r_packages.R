@@ -6,18 +6,20 @@
 install.packages("devtools")
 
 ## project managemnet
-proj <- c('renv', 'pacman', # project version management
+proj <- c('renv', # project version management
+	  'targets', # DAG pipelines through makefile style workflow
           'tidylog', # result changes
           'tictoc', # timekeeping on code
-          'reticulate' # run python in R
+          'reticulate' # run python in R || requires python kernel
 )
 install.packages(proj)
 
 ## data management
 datamgmt <- c('tidyverse', # package of common tools using the same syntax format
-              'data.table', # alternative to tidyverse
+              'data.table', # alternative to tidyverse; this is my new norm
+	      'dtplyr', # data.table backend for dplyr/tidyr
               'janitor', # simple data cleaning (names, empty rows/cols; tidyverse+)
-              'nanier', # for changing any and all values to NA (tidyverse+); NOT SUPPORT YET ON R4.0
+              'nanier', # for changing any and all values to NA (tidyverse+)
               'lubridate', # date functions (tidyverse+)
               'skimr', # data browsing, use!
               'visdat', # data exploration
@@ -42,24 +44,27 @@ epi <- c('epitools', # basic epi functions
          'multcomp', # glm and ci calculations
          'Hmisc', # power and sample size calculations and lots of other things
          'MASS', # stats package
-         'EpiCurve', # plots an epicurve
+         'EpiCurve', # plots an epicurve if you're feeling lazy
          'forecast', # tsa forecasting
-         'DesignLibary', # model design; ; NOT SUPPORT YET ON R4.0
-         'fmsb', # medical stats
-         'pwr' # power sample size caluclations
+	 'NHSDataDictionaRy', # API for NHS Data Dictionary
+	 'coder' # new package for ICD/ACT coding and comorbidity
 )
 install.packages(epi)
 
 ## input/output of data
 inputs <- c('openxlsx','readxl', # read and write XLSX
+	    'tidyxl', # tidyverse+ XLS[X] reader
+	    'readr', # tidyverse for reading in files; but data.table::fread may be better
             'haven', # read other data types including STATA files
             'foriegn', # read other data types including STATA files; NOT SUPPORT YET ON R4.0
-            'odbc' # allows you to ODBC into databases, faster than RODBC
+            'odbc', # allows you to ODBC into databases, faster than RODBC
+	    'DBI' # use in combo with odbc for database read/write/append
 )
 install.packages(inputs)
 
 ## graphs (ggplot included in tidyverse)
-graph <- c('cowplot', # addon to ggplot
+graph <- c('plotly', # incredible graphing library
+	   'cowplot', # addon to ggplot
            'ggrepel',  # addon to ggplot
            'ggseas', # time series lines w seasonality
            'ggpubr', # plotting normality for checks
@@ -79,13 +84,16 @@ maps <- c('ggmap', # ggplot mapping
 install.packages(maps)
 
 ## publication table 1 summaries
-exp <- c('arsenal', # powerful table 1 creator
+exp <- c('gt', # grammer of tables; ggplot equivalent for tables
+	 'arsenal', # powerful table 1 creator
          'tableone' # less flexible but easy to use
 )
 install.packages(exp)
 
 ## multicore processing
-multi <- c('foreach', # parallel loops
+multi <- c('multidplyr', # multicore backend for dplyr; stil in dev
+	   'foreach', # parallel loops
+	   'furrr', # purrr in parallel
            'h20', # connects to H20 ML engine
            'future', # evaluations in parallel
            'sparklyr', # Apache Spark interface
@@ -95,21 +103,20 @@ multi <- c('foreach', # parallel loops
 )
 install.packages(multi)
 
-devtools::install_github('tidyverse/multidplyr') # multi-core processing for dplyr
-
 ## markdown extras
-mrkdwn <- c('htmlwidgets', # plugins
-            'knitr', # markdown essential
-            'kableExtra', # better tables for HTML markdown
-            'pander', # type conversions
-            'trelliscopejs', # dashboards for ggplot
-            'flexdashboard', # dashboards
-            'plotly', # interactive ggplots
-            'broom', # regression output cleanup
-            'broom.mixed', # for mixed effect model output cleaning
-            'captioner' # automate seqential figure and table numbers/captions and citations
+mrkdwn_shiny <- c('htmlwidgets', # plugins
+		  'knitr', # markdown essential
+		  'kableExtra', # better tables for HTML markdown
+		  'pander', # type conversions
+		  'trelliscopejs', # dashboards for ggplot
+		  'flexdashboard', # dashboard layouts
+		  'shinydashboard', # shiny themes and skins
+		  'DT', # shiny output tables
+		  'broom', # regression output cleanup
+		  'broom.mixed', # for mixed effect model output cleaning
+		  'captioner' # automate seqential figure and table numbers/captions and citations
 )
-install.packages(mrkdwn)
+install.packages(mrkdwn_shiny)
 
 ## github installs, gitlab ones require network connections
 httr::set_config(httr::config(ssl_verifypeer=0L))
@@ -123,7 +130,8 @@ phe <- c('https://gitlab.phe.gov.uk/packages/DataLakeR',## denominator data from
 devtools::install_git(phe)
 
 ## GitHub ####
-github <- c('DanielGardiner/EpiFunc', ## agesex and epicurves
+github <- c('alexbhatt/epidm', ## data management functions for UK Public Health Data
+	    'DanielGardiner/EpiFunc', ## agesex and epicurves
             'PublicHealthEngland/odsR', ## ODS denonimators
             'ukgovdatascience/govstyle', ## GOV UK branding
             'hrbrmstr/hrbrthemes', ## nice ggplot themes for graphs
